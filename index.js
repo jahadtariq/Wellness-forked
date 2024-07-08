@@ -50,22 +50,25 @@ app.post('/api/medication/post', async (req, res) => {
         dossage,
         frequency,
         startDate,
-        endDate
+        endDate,
+        times
     } = req.body;
-
     try {
+        const timesAsDate = times.map((time) => {
+            const date = new Date();
+            console.log(date)
+        });
         const newMedication = new Medication({
             userId,
             medicationName,
-            dossage,
-            frequency,
             startDate,
-            endDate
-        })
-
+            endDate,
+            frequency,
+            dossage,
+            times: timesAsDate,
+        });
         const timeToNotify = frequency / 24;
-
-        await newMedication.save().then(()=>{
+        await newMedication.save().then(() => {
             console.log("Medication Scheduler Running");
 
             console.log(timeToNotify);
@@ -84,6 +87,41 @@ app.post('/api/medication/post', async (req, res) => {
         return;
     }
 })
+
+app.get("/api/medication/get", async function handleMedicationReminders() {
+    try {
+        // Get the current date
+        const currentDate = new Date();
+
+        // Get all users
+        const users = await Users.find();
+
+        // Loop through each user
+        for (const user of users) {
+            // Get all active medications for the user
+            const medications = await Medication.find({
+                userId: user._id,
+                endDate: { $gte: currentDate },
+            });
+
+            // Loop through each medication
+            for (const medication of medications) {
+                // Loop through each specified time for the medication
+                for (const time of medication.times) {
+                    // Calculate the countdown time
+                    const countdownTime = time.getTime() - currentDate.getTime();
+
+                    // Set a countdown using setTimeout
+                    setTimeout(() => {
+                        console.log(`${user.username} has to take medication in ${countdownTime} seconds`);
+                    }, countdownTime);
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
 
 app.get('/api/medication/get/:id', async (req, res) => {
     try {
