@@ -55,8 +55,8 @@ app.post('/api/medication/post', async (req, res) => {
     } = req.body;
     try {
         const timesAsDate = times.map((time) => {
-            const date = new Date();
-            console.log(date)
+            const date = new Date(time);
+            return date;
         });
         const newMedication = new Medication({
             userId,
