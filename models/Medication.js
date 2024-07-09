@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const MedicationSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    name: { type: String },
+    medicationName: { type: String },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
     dossage: { type: Number, required: true },
