@@ -33,7 +33,7 @@ app.get("/api/medication/get/:userId", getMeds);
 
 // Hydration API's
 // app.post('/api/hydration/post', newHydration);
-app.post('/api/panipi/:id', updateHydration);
+app.post('/api/hydration/:id', updateHydration);
 
 // Smoking API's
 app.put('/api/smoking/:id', smokingApi)
