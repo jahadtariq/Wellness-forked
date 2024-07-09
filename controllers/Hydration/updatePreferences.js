@@ -1,43 +1,44 @@
 const Hydration = require('../../models/Hydration');
 
 async function updatePreferences(req, res) {
-    const { id } = req.params;
-    const {
-        glasses,
-        time
-    } = req.body;
     try {
-        const userTrackRecord = await Hydration.findOne({ userId: id })
-        if (userTrackRecord) {
-            const updatedHydration = new Hydration({
-                amount,
-                notes,
-                userId,
-                preferences: {
-                    glasses,
-                    time
-                }
-            })
-            await newHydration.save();
-            res.status(200).json({ message: 'Hydration saved successfully' });
-        } else {
-            const newHydration = new Hydration({
-                amount,
-                notes,
-                userId,
-                preferences: {
-                    glasses,
-                    time
-                }
-            })
-            await newHydration.save();
-            res.status(200).json({ message: 'Hydration saved successfully' });
+        const { id } = req.params.id;
+        const { glasses, time } = req.body;
+    
+        // Find the hydration document for the given userId
+        const hydration = await Hydration.findOne({ id });
+    
+        if (!hydration) {
+          return res.status(404).json({ message: 'Hydration data not found' });
         }
-    } catch (e) {
-        console.error('Error:', e);
-        res.status(500).send('Server Error');
-        return;
-    }
+    
+        // Update the preferences object
+        if(glasses) {
+          const noTime = 1;
+          hydration.preferences = {
+            glasses,
+            noTime
+          };
+        } else if (time) {
+          const noGlass = 1;
+          hydration.preferences = {
+            noGlass,
+            time
+          };
+        } else if (glasses && time) {
+          hydration.preferences = {
+            glasses,
+            time
+          };
+        }
+    
+        // Save the updated hydration document
+        await hydration.save();
+    
+        res.status(200).json(hydration);
+      } catch (error) {
+        res.status(500).json({ message: error.message });
+      }
 };
 
 module.exports = { updatePreferences };
