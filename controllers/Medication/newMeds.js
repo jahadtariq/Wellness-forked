@@ -25,6 +25,9 @@ async function newMeds(req,res)
             dossage,
             times: timesAsDate,
         });
+
+        // Fix the number of times input at frontend based on the frequency
+
         const timeToNotify = frequency / 24;
         await newMedication.save();
         // .then(() => {

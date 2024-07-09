@@ -17,7 +17,7 @@ const { getSmoking, updateSmoking, newSmoking } = require('./controllers/Smoking
 
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 connectToDatabase()
 
@@ -31,8 +31,8 @@ app.post('/api/medication/post', newMeds);
 app.get("/api/medication/get/:userId", getMeds);
 
 // Hydration API's
-app.post('/api/hydration/post', newHydration);
-app.put('/api/panipi/:id', updateHydration);
+// app.post('/api/hydration/post', newHydration);
+app.post('/api/panipi/:id', updateHydration);
 
 // Smoking API's
 app.post('',)
