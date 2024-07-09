@@ -6,7 +6,6 @@ const { connectToDatabase } = require('./controllers/connections');
 
 const bodyParser = require('body-parser');
 
-const { newHydration } = require('./controllers/Hydration/newHydration');
 const { updateHydration } = require('./controllers/Hydration/updateHydration');
 
 const { newMeds } = require('./controllers/Medication/newMeds');
