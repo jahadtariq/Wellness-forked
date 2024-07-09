@@ -15,7 +15,7 @@ async function updateHydration(req, res) {
 
             const hydration = await Hydration.findOne({ userId: id })
             await Hydration.findOneAndUpdate({ userId: id }, { amount: hydration.amount + 1 }).then(() => {
-                console.log("Pani piya successfully")
+                res.status(200).json({ message: "Successfully hydrated" })
             })
         } else {
             const newHydration = new Hydration({
@@ -28,7 +28,7 @@ async function updateHydration(req, res) {
                 }
             })
             await newHydration.save();
-            res.status(200).json({ message: 'Hydration saved successfully' });
+            res.status(200).json({ message: 'Hydration tracking saved successfully' });
         }
     } catch (e) {
         console.error('Error:', e);

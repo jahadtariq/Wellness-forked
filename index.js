@@ -11,9 +11,10 @@ const { updateHydration } = require('./controllers/Hydration/updateHydration');
 const { newMeds } = require('./controllers/Medication/newMeds');
 const { getMeds } = require('./controllers/Medication/getMeds');
 
-const { newUser } =  require('./controllers/User/newUser');
+const { newUser } = require('./controllers/User/newUser');
 
-const { getSmoking, updateSmoking, newSmoking } = require('./controllers/Smoking/Smoking');
+const { getSmoking, updateSmoking, newSmoking } = require('./controllers/Smoking/smokingapi');
+const smokingApi = require('./controllers/Smoking/smokingapi');
 
 const { updatePreferences } = require('./controllers/Hydration/updatePreferences');
 const { getHydration } = require('./controllers/Hydration/getHydration');
@@ -40,7 +41,7 @@ app.get('/api/hydration/:id', getHydration);
 app.post('/api/preferences/:id', updatePreferences);
 
 // Smoking API's
-app.post('',)
+app.put('/api/smoking/:id', smokingApi)
 
 
 app.listen(PORT, () => {
