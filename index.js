@@ -16,6 +16,9 @@ const { newUser } = require('./controllers/User/newUser');
 const { getSmoking, updateSmoking, newSmoking } = require('./controllers/Smoking/smokingapi');
 const smokingApi = require('./controllers/Smoking/smokingapi');
 
+const { updatePreferences } = require('./controllers/Hydration/updatePreferences');
+const { getHydration } = require('./controllers/Hydration/getHydration');
+
 const app = express();
 
 const PORT = process.env.PORT || 4000;
@@ -34,6 +37,8 @@ app.get("/api/medication/get/:userId", getMeds);
 // Hydration API's
 // app.post('/api/hydration/post', newHydration);
 app.post('/api/hydration/:id', updateHydration);
+app.get('/api/hydration/:id', getHydration);
+app.post('/api/preferences/:id', updatePreferences);
 
 // Smoking API's
 app.put('/api/smoking/:id', smokingApi)
