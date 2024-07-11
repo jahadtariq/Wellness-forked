@@ -2,18 +2,18 @@
 const Activity = require('../../models/Activity');
 const Hydration = require('../../models/Hydration');
 
-const { Queue } = require('bullmq');
-const Redis = require('ioredis');
+// const { Queue } = require('bullmq');
+// const Redis = require('ioredis');
 
-// Redis connection
-const connection = new Redis({
-  host: 'localhost',
-  port: 6379,
-  maxRetriesPerRequest: null,
-});
+// // Redis connection
+// const connection = new Redis({
+//   host: 'localhost',
+//   port: 6379,
+//   maxRetriesPerRequest: null,
+// });
 
 // Create a new queue and scheduler for notifications
-const notificationQueue = new Queue('notificationQueue', { connection });
+// const notificationQueue = new Queue('notificationQueue', { connection });
 
 
 async function updateHydration(req, res) {
@@ -134,20 +134,20 @@ async function setScheduledNotifications(hydrationRecord, glasses, time) {
       }
 
 
-      await notificationQueue.add(
-        'sendNotification',
-        {
-          userId: userId.toString(),
-          title: 'Time to Hydrate',
-          message: `It's time to drink a glass of water`,
-          type: 'info',
-          miniAppId: 'hydration',
-          scheduledTime: notificationTime.toISOString()
-        },
-        { 
-          delay
-        }
-      );
+      // await notificationQueue.add(
+      //   'sendNotification',
+      //   {
+      //     userId: userId.toString(),
+      //     title: 'Time to Hydrate',
+      //     message: `It's time to drink a glass of water`,
+      //     type: 'info',
+      //     miniAppId: 'hydration',
+      //     scheduledTime: notificationTime.toISOString()
+      //   },
+      //   { 
+      //     delay
+      //   }
+      // );
 
       console.log("Notification Added to Queue.");
       console.log("         ");

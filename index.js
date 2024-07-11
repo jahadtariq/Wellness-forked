@@ -53,6 +53,7 @@ app.post('/api/schedule/workout/:userId', scheduleWorkout)
 app.put('/api/schedule/workout/:id/completion', workoutCompletion)
 //Get all workouts marked as scheduled
 app.get('/api/schedule/workout/:userId',getWorkouts)
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
