@@ -20,6 +20,7 @@ const { updatePreferences } = require('./controllers/Hydration/updatePreferences
 const { getHydration } = require('./controllers/Hydration/getHydration');
 const { scheduleWorkout } = require('./controllers/Workout/scheduleWorkout');
 const { workoutCompletion } = require('./controllers/Workout/workoutCompletion');
+const { getWorkouts } = require('./controllers/Workout/getWorkouts');
 
 const app = express();
 
@@ -46,8 +47,12 @@ app.post('/api/preferences/:id', updatePreferences);
 app.put('/api/smoking/:id', smokingApi)
 
 //Workout
+//Post new wrokouts
 app.post('/api/schedule/workout/:userId', scheduleWorkout)
+//Update wrokouts if completed
 app.put('/api/schedule/workout/:id/completion', workoutCompletion)
+//Get all workouts marked as scheduled
+app.get('/api/schedule/workout/:userId',getWorkouts)
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
