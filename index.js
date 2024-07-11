@@ -24,7 +24,7 @@ const { getWorkouts } = require('./controllers/Workout/getWorkouts');
 
 const app = express();
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 
 connectToDatabase()
 
