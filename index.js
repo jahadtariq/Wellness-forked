@@ -18,6 +18,8 @@ const smokingApi = require('./controllers/Smoking/smokingapi');
 
 const { updatePreferences } = require('./controllers/Hydration/updatePreferences');
 const { getHydration } = require('./controllers/Hydration/getHydration');
+const { scheduleWorkout } = require('./controllers/Workout/scheduleWorkout');
+const { workoutCompletion } = require('./controllers/Workout/workoutCompletion');
 
 const app = express();
 
@@ -43,7 +45,9 @@ app.post('/api/preferences/:id', updatePreferences);
 // Smoking API's
 app.put('/api/smoking/:id', smokingApi)
 
-
+//Workout
+app.post('/api/schedule/workout/:userId', scheduleWorkout)
+app.put('/api/schedule/workout/:id/completion', workoutCompletion)
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
