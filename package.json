@@ -9,5 +9,10 @@
     "k6": "^0.0.0",
     "mongoose": "^8.4.5",
     "node-cron": "^3.0.3"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "k6 run loadTesting.tsx",
+    "dev": "nodemon index.js"
   }
 }
