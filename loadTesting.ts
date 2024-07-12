@@ -17,7 +17,7 @@ export default function() {
     headers: {
       'Content-Type': 'application/json',
     },
-  };
+  }
 
   for (let workoutId = 1; workoutId <= 100; workoutId++) {
     const url = `http://localhost:5000/api/schedule/workout/${workoutId}/completion`;
