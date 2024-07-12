@@ -1,37 +1,36 @@
 const express = require('express');
 const helmet = require('helmet')
 const dotenv = require('dotenv').config();
-const { connectToDatabase } = require('./controllers/connections');
-
 const bodyParser = require('body-parser');
 
-const { updateHydration } = require('./controllers/Hydration/updateHydration');
-
-const { newMeds } = require('./controllers/Medication/newMeds');
-const { getMeds } = require('./controllers/Medication/getMeds');
-
-const { newUser } = require('./controllers/User/newUser');
-
-const smokingApi = require('./controllers/Smoking/smokingapi');
-
-const { updatePreferences } = require('./controllers/Hydration/updatePreferences');
-const { getHydration } = require('./controllers/Hydration/getHydration');
-const { scheduleWorkout } = require('./controllers/Workout/scheduleWorkout');
-const { workoutCompletion } = require('./controllers/Workout/workoutCompletion');
-const { getWorkouts } = require('./controllers/Workout/getWorkouts');
-const { Mixed } = require('./models/Mixed');
+// Routes import Statements
 const { ExcersiceRouter } = require('./Routes/ExcerciseRouter');
+const { HydrationRouter } = require('./Routes/HydrationRouter');
+const { MedicationRouter } = require('./Routes/MedicationRouter');
+const { SmokingRouter } = require('./Routes/SmokingRouter');
+const { UserRouter } = require('./Routes/UserRouter');
+const { WorkoutRouter } = require('./Routes/WorkoutRouter');
 
-const app = express();
-
-const PORT = process.env.PORT || 5000;
-
+//Establishing connection with the database
+const { connectToDatabase } = require('./controllers/connections');
 connectToDatabase()
+
+//Express App Configurations
+const app = express();
+const PORT = process.env.PORT || 5000;
 app.use(helmet())
 app.use(bodyParser.urlencoded({ extended: true }))
+
+
+// Routes
 app.use(ExcersiceRouter)
+app.use(HydrationRouter)
+app.use(MedicationRouter)
+app.use(SmokingRouter)
+app.use(UserRouter)
+app.use(WorkoutRouter)
 
-
+//Importing Controllers
 
 // User API's
 app.post('/user/post', newUser);
@@ -55,6 +54,6 @@ app.put('/api/schedule/workout/:id/completion', workoutCompletion)
 //Get all workouts marked as scheduled
 app.get('/api/schedule/workout/:userId', getWorkouts)
 
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(process.env.PORT, () => {
+    console.log(`Server is running on http://localhost:${process.env.PORT}`);
 });

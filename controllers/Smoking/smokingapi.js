@@ -48,4 +48,4 @@ async function smokingApi(req, res) {
     }
 }
 
-module.exports = smokingApi;
+module.exports = {smokingApi};
