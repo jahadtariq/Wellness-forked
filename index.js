@@ -27,10 +27,6 @@ connectToDatabase()
 
 app.use(bodyParser.urlencoded({ extended: true }))
 
-//middleware for ensuring connection to db
-
-
-
 // User API's
 app.post('/user/post', newUser);
 
