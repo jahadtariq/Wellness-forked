@@ -10,6 +10,7 @@ const { MedicationRouter } = require('./Routes/MedicationRouter');
 const { SmokingRouter } = require('./Routes/SmokingRouter');
 const { UserRouter } = require('./Routes/UserRouter');
 const { WorkoutRouter } = require('./Routes/WorkoutRouter');
+const { ActivityRouter } = require('./Routes/ActivityRoutes');
 
 //Establishing connection with the database
 const { connectToDatabase } = require('./controllers/connections');
@@ -28,7 +29,7 @@ app.use(MedicationRouter)
 app.use(SmokingRouter)
 app.use(UserRouter)
 app.use(WorkoutRouter)
-
+app.use(ActivityRouter)
 
 app.listen(process.env.PORT, () => {
     console.log(`Server is running on http://localhost:${process.env.PORT}`);

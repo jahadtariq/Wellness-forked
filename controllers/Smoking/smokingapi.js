@@ -1,46 +1,29 @@
-const Smoking = require("../../models/Smoking");
-const Activity = require('../../models/Activity'); // Assuming you have an Activity model
+const Smoking = require('../../models/Smoking');
+const Activity = require('../../models/Activity');
 
 async function smokingApi(req, res) {
     try {
         const { id } = req.params;
-        const record = await Smoking.findOne({ userId: id });
-
+        // Find the smoking record for the user
+        let record = await Smoking.findOne({ userId: id });
         if (!record) {
-            const newRecord = new Smoking({
+            // If no record exists, create a new one
+            record = new Smoking({
                 userId: id,
                 cigarettes: 1
             });
-            await newRecord.save();
+            await record.save();
             // Create activity log for smoking
-            const activityLog = new Activity({
-                userId: id,
-                activity: 'SmokingActivity',
-                progress: 100 // You might adjust this based on your specific logic
-            });
-            await activityLog.save();
+            await createOrUpdateActivityLog(id, 100);
             res.status(200).json({ message: 'New Smoking Record Created' });
         } else {
-            const updatedRecord = await Smoking.findOneAndUpdate(
-                { userId: id },
-                { cigarettes: record.cigarettes + 1 },
-                { new: true } // To return the updated record
-            );
+            record.cigarettes++;
+            await record.save();
+            // Calculate progress based on cigarettes smoked
+            const progress = calculateProgress(record.cigarettes);
             // Create or update activity log for smoking
-            let todaysActivity = await Activity.findOne({ userId: id, activity: 'SmokingActivity' });
-            const progress = 100 - (updatedRecord.cigarettes / 10) * 100; // Adjust as per your logic
-            if (todaysActivity) {
-                todaysActivity.progress = progress;
-                await todaysActivity.save();
-            } else {
-                const activityLog = new Activity({
-                    userId: id,
-                    activity: 'SmokingActivity',
-                    progress: progress
-                });
-                await activityLog.save();
-            }
-            res.status(200).json({ message: `Watch out bro, it's getting too much ${updatedRecord.cigarettes}` });
+            await createOrUpdateActivityLog(id, progress);
+            res.status(200).json({ message: `Watch out bro, it's getting too much ${record.cigarettes}` });
         }
     } catch (e) {
         console.error('Error:', e);
@@ -48,4 +31,24 @@ async function smokingApi(req, res) {
     }
 }
 
-module.exports = {smokingApi};
+// Function to create or update activity log
+async function createOrUpdateActivityLog(userId, progress) {
+    let activityLog = await Activity.findOne({ userId, activity: 'SmokingActivity' });
+    if (activityLog) {
+        activityLog.progress = progress;
+    } else {
+        activityLog = new Activity({
+            userId,
+            activity: 'SmokingActivity',
+            progress
+        });
+    }
+
+    await activityLog.save();
+}
+// Function to calculate progress based on cigarettes smoked
+function calculateProgress(cigarettes) {
+    return 100 - (cigarettes / 10) * 100; // Adjust as per your logic
+}
+
+module.exports = { smokingApi };
