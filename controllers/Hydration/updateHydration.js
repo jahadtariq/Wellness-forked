@@ -2,18 +2,18 @@
 const Activity = require('../../models/Activity');
 const Hydration = require('../../models/Hydration');
 
-const { Queue } = require('bullmq');
-const Redis = require('ioredis');
+// const { Queue } = require('bullmq');
+// const Redis = require('ioredis');
 
-// Redis connection
-const connection = new Redis({
-  host: 'localhost',
-  port: 6379,
-  maxRetriesPerRequest: null,
-});
+// // Redis connection
+// const connection = new Redis({
+//   host: 'localhost',
+//   port: 6379,
+//   maxRetriesPerRequest: null,
+// });
 
 // Create a new queue and scheduler for notifications
-const notificationQueue = new Queue('notificationQueue', { connection });
+// const notificationQueue = new Queue('notificationQueue', { connection });
 
 
 async function updateHydration(req, res) {
