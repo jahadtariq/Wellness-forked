@@ -28,7 +28,8 @@ const workoutSchema = new mongoose.Schema({
     workouts: [{
         secheduledFor: String,
         completed: Boolean,
-        url: String
+        //Mixed is our collection for excercises
+        workoutId: { type: mongoose.Schema.Types.ObjectId, ref: 'Mixed', required: true }
     }]
 })
 
