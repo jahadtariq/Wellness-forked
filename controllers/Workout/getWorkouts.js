@@ -10,7 +10,7 @@ async function getWorkouts(req, res) {
         }
     } catch (e) {
         console.error('Error:', e);
-        res.status(500).send('Server Error');
+        res.status(500).json({ message: 'Error: ' + e.message });
         return;
     }
 }
