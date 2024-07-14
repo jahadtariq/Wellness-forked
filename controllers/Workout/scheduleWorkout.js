@@ -1,7 +1,7 @@
 const Workout = require("../../models/Workout");
 
 async function scheduleWorkout(req, res) {
-    const { name, target, secondaryMuscles, bodyPart, equipment, instructions, gifUrl, secheduledFor, completed, caloriesBurned, id, workoutId } = req.body;
+    const {secheduledFor, completed, workoutId } = req.body;
     const { userId } = req.params;
     try {
         //Search for existing workouts scheduled..
@@ -36,7 +36,5 @@ async function scheduleWorkout(req, res) {
         return;
     }
 }
-
-
 
 module.exports = { scheduleWorkout }
