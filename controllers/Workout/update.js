@@ -20,7 +20,7 @@ async function updateWorkout(req, res) {
             { userId: userId, 'workouts._id': workoutId },
             { $set: updateFields },
             { new: true }
-        );
+        )
 
         if (!workout) {
             return res.status(404).json({ message: "Workout not found" });
