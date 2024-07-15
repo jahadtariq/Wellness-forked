@@ -10,7 +10,7 @@ const { updateWorkout } = require('../controllers/Workout/update')
 //Workout
 WorkoutRouter.post('/api/schedule/workout/:userId', scheduleWorkout)
 //Update workout prefrences
-WorkoutRouter.put('/api/schedule/workout/:userId/:workoutId', updateWorkout)
+WorkoutRouter.put('/api/schedule/workout/:userId/:workoutObjectId', updateWorkout)
 //Get all workouts marked as scheduled
 WorkoutRouter.get('/api/schedule/workout/:userId', getWorkouts)
 // Delete workout by ObjectId

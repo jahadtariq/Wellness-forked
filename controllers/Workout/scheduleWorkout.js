@@ -1,7 +1,7 @@
 const Workout = require("../../models/Workout");
 
 async function scheduleWorkout(req, res) {
-    const { secheduledFor, completed, workoutName } = req.body;
+    const { scheduledFor, completed, workoutName } = req.body;
     const { userId } = req.params;
 
     try {
@@ -9,11 +9,11 @@ async function scheduleWorkout(req, res) {
         const existingWorkout = await Workout.findOne({
             userId: userId,
             'workouts.workoutName': workoutName,
-            'workouts.secheduledFor': secheduledFor
+            'workouts.scheduledFor': scheduledFor
         });
 
         if (existingWorkout) {
-            // Workout with the same workoutId and secheduledFor already exists
+            // Workout with the same workoutId and scheduledFor already exists
             return res.status(400).json({ message: 'Workout with the same workout name and scheduled for time already exists.' });
         } else {
             // No existing workout found, proceed to add the new workout
@@ -22,7 +22,7 @@ async function scheduleWorkout(req, res) {
                 {
                     $push: {
                         workouts: {
-                            secheduledFor: secheduledFor,
+                            scheduledFor: scheduledFor,
                             completed: completed || false,
                             workoutName: workoutName
                         }

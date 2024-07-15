@@ -26,12 +26,10 @@ const mongoose = require('mongoose');
 const workoutSchema = new mongoose.Schema({
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     workouts: [{
-        secheduledFor: String,
-        completed: Boolean,
-        //Mixed is our collection for excercises
-        // workoutId: { type: mongoose.Schema.Types.ObjectId, ref: 'Mixed', required: true }
-        workoutName: String,
+        scheduledFor: { type: Number, enum: [0, 1, 2, 3, 4, 5, 6], required: true },
+        completed: { type: Boolean, default: false },
+        workoutName: { type: String, required: true }
     }]
-})
+});
 
 module.exports = mongoose.model('Workout', workoutSchema);
