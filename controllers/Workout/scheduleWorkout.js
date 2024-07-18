@@ -2,7 +2,7 @@ const Workout = require("../../models/Workout");
 
 async function scheduleWorkout(req, res) {
     const { scheduledFor, completed, workoutName } = req.body;
-    const { userId } = req.params;
+    const { userId } = req.params.userId;
 
     try {
         // Check if there is an existing workout with the same workoutId and scheduledFor time

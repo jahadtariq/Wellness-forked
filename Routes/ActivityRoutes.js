@@ -5,7 +5,7 @@ const ActivityRouter = express.Router();
 ActivityRouter.get('/api/activities/:id', async (req, res) => {
     try {
         const userActivity = await Activity.findOne({ userId: req.params.id })
-        if (userActivity == {}) {
+        if (userActivity) {
             res.json({ userActivity })
         } else {
             res.status(404).json({ message: 'No Activity Record Found For The User' })

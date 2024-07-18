@@ -54,7 +54,7 @@ async function updateHydration(req, res) {
     //   await setScheduledNotifications(userTrackRecord, glasses);
 
     // Set the scheduled notifications
-    await setScheduledNotifications(userTrackRecord, glasses, time);
+    // await setScheduledNotifications(userTrackRecord, glasses, time);
 
       res.status(200).json({ message: "Hydration Updated" });
     } else {
@@ -95,62 +95,62 @@ async function updateHydration(req, res) {
   }
 }
 
-async function setScheduledNotifications(hydrationRecord, glasses, time) {
+// async function setScheduledNotifications(hydrationRecord, glasses, time) {
 
-    const { userId  } = hydrationRecord;
+//     const { userId  } = hydrationRecord;
 
-    const interval = glasses / time;
+//     const interval = glasses / time;
   
-    // Schedule the notifications
-    for (let i = 0; i < glasses; i++) {
+//     // Schedule the notifications
+//     for (let i = 0; i < glasses; i++) {
 
-      const notificationTime = new Date(i * interval * 60 * 60 * 1000);
+//       const notificationTime = new Date(i * interval * 60 * 60 * 1000);
 
-      // removed the logic of wake and sleep time in notification
+//       // removed the logic of wake and sleep time in notification
 
-      console.log("         ");
-      // Console log the notification
-      console.log({
-        userId: userId.toString(),
-        title: 'Time to Hydrate',
-        message: `It's time to drink a glass of water`,
-        type: 'info',
-        miniAppId: 'hydration',
-        scheduledTime: notificationTime.toISOString()
-      });
+//       console.log("         ");
+//       // Console log the notification
+//       console.log({
+//         userId: userId.toString(),
+//         title: 'Time to Hydrate',
+//         message: `It's time to drink a glass of water`,
+//         type: 'info',
+//         miniAppId: 'hydration',
+//         scheduledTime: notificationTime.toISOString()
+//       });
 
-      console.log("         ");
+//       console.log("         ");
 
-      // Calculate the delay in milliseconds
-      console.log(notificationTime);
-      const delay = new Date(notificationTime).getTime() - new Date().getTime();
+//       // Calculate the delay in milliseconds
+//       console.log(notificationTime);
+//       const delay = new Date(notificationTime).getTime() - new Date().getTime();
 
-      console.log(delay);
+//       console.log(delay);
 
-    //   if (delay <= 0) {
-    //     return res.status(400).json({ message: 'Scheduled time must be in the future' });
-    //   }
+//     //   if (delay <= 0) {
+//     //     return res.status(400).json({ message: 'Scheduled time must be in the future' });
+//     //   }
 
 
-      await notificationQueue.add(
-        'sendNotification',
-        {
-          userId: userId.toString(),
-          title: 'Time to Hydrate',
-          message: `It's time to drink a glass of water`,
-          type: 'info',
-          miniAppId: 'hydration',
-          scheduledTime: notificationTime.toISOString()
-        },
-        { 
-          delay
-        }
-      );
+//       await notificationQueue.add(
+//         'sendNotification',
+//         {
+//           userId: userId.toString(),
+//           title: 'Time to Hydrate',
+//           message: `It's time to drink a glass of water`,
+//           type: 'info',
+//           miniAppId: 'hydration',
+//           scheduledTime: notificationTime.toISOString()
+//         },
+//         { 
+//           delay
+//         }
+//       );
 
-      console.log("Notification Added to Queue.");
-      console.log("         ");
+//       console.log("Notification Added to Queue.");
+//       console.log("         ");
 
-    }
-  }
+//     }
+//   }
 
 module.exports = { updateHydration };
